@@ -1,0 +1,19 @@
+# Terraform Çalışma Dosyaları
+.terraform/
+.terraform.lock.hcl
+
+# Terraform State (Asla yükleme)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+
+# Değişken Dosyaları (Şifre içerir)
+*.tfvars
+!example.tfvars # Örnek (boş) tfvars varsa atabilirsin, ama bizde yok
+
+# Gezici Dosyalar
+.terraform/
+*.swp
+*.swo
+*~
