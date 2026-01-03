@@ -10,11 +10,6 @@ jobs:
   terraform-plan:
     name: "Terraform Plan"
     runs-on: self-hosted
-    
-    # Tüm 'run' adımları bu klasörde çalışacak
-    defaults:
-      run:
-        working-directory: /home/actions-runner/terraform-workspace
 
     env:
       TF_VAR_vsphere_user: ${{ secrets.TF_VAR_vsphere_user }}
@@ -43,12 +38,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          # Kodu sabit klasöre çek
-          path: /home/actions-runner/terraform-workspace
+        # path parametresi kaldırıldı, standart dönecek
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -state=/home/actions-runner/terraform-workspace/terraform.tfstate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan -state=/home/actions-runner/terraform-workspace/terraform.tfstate
