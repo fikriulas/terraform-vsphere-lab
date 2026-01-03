@@ -1,6 +1,5 @@
 name: Terraform Destroy
 
-# Sadece manuel tetikle
 on:
   workflow_dispatch:
 
@@ -8,6 +7,9 @@ jobs:
   terraform-destroy:
     name: "Terraform Destroy"
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: /home/actions-runner/terraform-workspace
 
     env:
       TF_VAR_vsphere_user: ${{ secrets.TF_VAR_vsphere_user }}
@@ -36,6 +38,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          path: /home/actions-runner/terraform-workspace
 
       - name: Terraform Init
         run: terraform init
