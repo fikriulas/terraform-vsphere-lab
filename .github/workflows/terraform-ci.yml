@@ -9,14 +9,41 @@ on:
 jobs:
   terraform-plan:
     name: "Terraform Plan"
-    # DİKKAT: Kendi Runner'ımızı (Self-hosted) kullanacak
     runs-on: self-hosted
 
-    # Terraform Değişkenlerini GitHub Secrets'tan alacak
-    # (Sonraki adımda bu secret'ları ekleyeceğiz)
+    # Tüm Değişkenleri GitHub Secrets'tan Environment Variable olarak alıyoruz
     env:
+      # vSphere Bağlantı
       TF_VAR_vsphere_user: ${{ secrets.TF_VAR_vsphere_user }}
       TF_VAR_vsphere_password: ${{ secrets.TF_VAR_vsphere_password }}
+      TF_VAR_vsphere_server: ${{ secrets.TF_VAR_vsphere_server }}
+      
+      # vSphere Altyapı
+      TF_VAR_vsphere_datacenter: ${{ secrets.TF_VAR_vsphere_datacenter }}
+      TF_VAR_vsphere_host: ${{ secrets.TF_VAR_vsphere_host }}
+      TF_VAR_datastore_name: ${{ secrets.TF_VAR_datastore_name }}
+      TF_VAR_network_name: ${{ secrets.TF_VAR_network_name }}
+      TF_VAR_template_name: ${{ secrets.TF_VAR_template_name }}
+
+      # VM Donanımı
+      TF_VAR_vm_name: ${{ secrets.TF_VAR_vm_name }}
+      TF_VAR_num_cpus: ${{ secrets.TF_VAR_num_cpus }}
+      TF_VAR_memory: ${{ secrets.TF_VAR_memory }}
+      TF_VAR_disk_label: ${{ secrets.TF_VAR_disk_label }}
+
+      # Windows OS
+      TF_VAR_computer_name: ${{ secrets.TF_VAR_computer_name }}
+      TF_VAR_workgroup: ${{ secrets.TF_VAR_workgroup }}
+      TF_VAR_admin_password: ${{ secrets.TF_VAR_admin_password }}
+      TF_VAR_time_zone: ${{ secrets.TF_VAR_time_zone }}
+      TF_VAR_auto_logon: ${{ secrets.TF_VAR_auto_logon }}
+      TF_VAR_auto_logon_count: ${{ secrets.TF_VAR_auto_logon_count }}
+
+      # Ağ Ayarları
+      TF_VAR_ipv4_address: ${{ secrets.TF_VAR_ipv4_address }}
+      TF_VAR_ipv4_netmask: ${{ secrets.TF_VAR_ipv4_netmask }}
+      TF_VAR_ipv4_gateway: ${{ secrets.TF_VAR_ipv4_gateway }}
+      TF_VAR_dns_server_list: ${{ secrets.TF_VAR_dns_server_list }}
 
     steps:
       - name: Checkout Code
