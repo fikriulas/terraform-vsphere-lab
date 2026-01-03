@@ -1,0 +1,35 @@
+name: Terraform CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  terraform-plan:
+    name: "Terraform Plan"
+    # DİKKAT: Kendi Runner'ımızı (Self-hosted) kullanacak
+    runs-on: self-hosted
+
+    # Terraform Değişkenlerini GitHub Secrets'tan alacak
+    # (Sonraki adımda bu secret'ları ekleyeceğiz)
+    env:
+      TF_VAR_vsphere_user: ${{ secrets.TF_VAR_vsphere_user }}
+      TF_VAR_vsphere_password: ${{ secrets.TF_VAR_vsphere_password }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          # Runner'ın kullandığı versiyon
+          terraform_version: 1.14.3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
