@@ -38,10 +38,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        # path parametresi kaldırıldı, standart dönecek
 
       - name: Terraform Init
-        run: terraform init -state=/home/actions-runner/terraform-workspace/terraform.tfstate
+        run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -state=/home/actions-runner/terraform-workspace/terraform.tfstate
+        run: terraform plan -out=tfplan

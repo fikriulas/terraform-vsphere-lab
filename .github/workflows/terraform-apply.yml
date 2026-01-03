@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Terraform Init
-        run: terraform init -state=/home/actions-runner/terraform-workspace/terraform.tfstate
+        run: terraform init
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -state=/home/actions-runner/terraform-workspace/terraform.tfstate
+        run: terraform apply -auto-approve

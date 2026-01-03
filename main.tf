@@ -1,3 +1,9 @@
+
+terraform {
+  backend "local" {
+    path = "/home/actions-runner/terraform-workspace/terraform.tfstate"
+  }
+}
 # --- vSphere Provider Ayarları ---
 provider "vsphere" {
   user                 = var.vsphere_user
