@@ -69,7 +69,33 @@ ipv4_gateway       = "192.168.1.1"
 dns_server_list    = ["8.8.8.8", "8.8.4.4"]
 ```
 
-## Usage
+## CI/CD with GitHub Actions
+
+This repository includes GitHub Actions workflows to automate the Terraform lifecycle.
+
+### Workflows
+
+| Workflow | Trigger | Description |
+| :--- | :--- | :--- |
+| **Terraform CI** | Push/PR to `main` | Runs `terraform plan` to validate changes and preview infrastructure updates. |
+| **Terraform Apply** | Manual (Dispatch) | Runs `terraform apply` to provision the infrastructure changes. |
+| **Terraform Destroy** | Manual (Dispatch) | Runs `terraform destroy` to tear down the infrastructure. |
+
+### Required GitHub Secrets
+
+To make these workflows functional, you must configure **Repository Secrets** in your GitHub repository settings. These secrets map to the Terraform variables.
+
+Common secrets include:
+
+- `TF_VAR_vsphere_user`
+- `TF_VAR_vsphere_password`
+- `TF_VAR_vsphere_server`
+- `TF_VAR_vsphere_datacenter`
+- ... (Include all other variables from `variables.tf` prefixed with `TF_VAR_`)
+
+**Note:** The workflows are configured to run on a **self-hosted runner**. Ensure you have a runner configured with access to your vSphere environment.
+
+## Usage (Local)
 
 1.  **Plan:**
     Preview the changes Terraform will make.
